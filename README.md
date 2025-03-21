@@ -1,0 +1,3 @@
+# Chuchu Tamagotchi app
+
+Epic
