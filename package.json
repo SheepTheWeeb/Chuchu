@@ -13,6 +13,9 @@
   },
   "author": "Sheep",
   "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@jest/globals": "^29.7.0",
