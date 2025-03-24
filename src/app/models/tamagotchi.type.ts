@@ -1,11 +1,14 @@
-import { State } from '../utils/tamagotchi.const'
+import { HealthState, LifeStage } from '../utils/tamagotchi.const'
 
 export type Tamagotchi = {
   id: string
   owner: string
   name: string
+  activity: string
+
   stats: Stats
-  status: State
+  lifeStage: LifeStage
+  health: HealthState
   sleep: Sleep
   wantsAttention: boolean
 }

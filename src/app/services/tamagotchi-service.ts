@@ -8,7 +8,7 @@ export class TamagotchiServiceImpl implements TamagotchiService {
   feed(): boolean {
     throw new Error('Method not implemented.')
   }
-  toggleLights(): boolean {
+  toggleLights(): void {
     throw new Error('Method not implemented.')
   }
   play(): boolean {
@@ -24,6 +24,7 @@ export class TamagotchiServiceImpl implements TamagotchiService {
     throw new Error('Method not implemented.')
   }
   talk(): boolean {
+    // TODO: say random strings back
     throw new Error('Method not implemented.')
   }
 }

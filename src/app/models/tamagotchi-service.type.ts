@@ -4,7 +4,7 @@ export interface TamagotchiService {
   restart(): boolean
 
   feed(): boolean
-  toggleLights(): boolean
+  toggleLights(): void
   play(): boolean
   cure(): boolean
 
