@@ -11,3 +11,12 @@ export enum LifeStage {
   Child,
   Adult,
 }
+
+export enum TamagotchiType {
+  Fit,
+  Normal,
+  NightOwl,
+  Fat,
+  Ill,
+  Lazy,
+}
