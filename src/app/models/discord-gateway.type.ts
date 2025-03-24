@@ -5,6 +5,7 @@ export interface DiscordGateway {
   client: Client<boolean>
   init(
     clientId: string,
+    guildId: string,
     token: string,
     commandService: CommandService,
   ): Promise<void>

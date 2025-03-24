@@ -15,10 +15,13 @@ export class RestartCommand implements BotCommand {
   }
 
   async execute(message: Interaction<CacheType>): Promise<void> {
+    console.log('restart command executing...')
     // TODO: Message handling
-    // TODO: implement restart use-case with db gateway
-    // Only allow to create a new one once the old one dies or if you don't have a tamagotchi yet
 
-    restart(this.databaseGateway)
+    try {
+      await restart(message.user.username, 'Henk Bosman', this.databaseGateway)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

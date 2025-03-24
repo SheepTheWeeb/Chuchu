@@ -32,5 +32,3 @@ export type Sleep = {
   asleep: boolean
   lights: boolean
 }
-
-// TODO: different type of tamagotchi

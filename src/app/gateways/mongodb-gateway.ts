@@ -16,6 +16,7 @@ export class MongoDBGatewayImpl implements DatabaseGateway {
     this.dbName = dbName
     this.tamagotchiCollectionName = tamagotchiCollectionName
     this.client = new MongoClient(connectionString)
+    this.collections = {}
   }
 
   private async connect(): Promise<void> {
@@ -65,6 +66,7 @@ export class MongoDBGatewayImpl implements DatabaseGateway {
     return tamagotchi
   }
 
+  // TODO: only get most recent one
   async getTamagotchiByOwner(owner: string): Promise<Tamagotchi> {
     let tamagotchi: Tamagotchi
     try {

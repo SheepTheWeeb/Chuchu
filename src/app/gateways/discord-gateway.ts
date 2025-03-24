@@ -9,16 +9,18 @@ export class DiscordGatewayImpl implements DiscordGateway {
 
   async init(
     clientId: string,
+    guildId: string,
     token: string,
     commandService: CommandService,
   ): Promise<void> {
     this.commandService = commandService
-    await this.initSlashCommands(clientId, token)
+    await this.initSlashCommands(clientId, guildId, token)
     this.initClient(token)
   }
 
   private async initSlashCommands(
     clientId: string,
+    guildId: string,
     token: string,
   ): Promise<void> {
     const restCommands = []
@@ -31,7 +33,7 @@ export class DiscordGatewayImpl implements DiscordGateway {
 
     try {
       console.log('Started refreshing application (/) commands.')
-      await rest.put(Routes.applicationCommands(clientId), {
+      await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
         body: restCommands,
       })
       console.log('Successfully reloaded application (/) commands.')

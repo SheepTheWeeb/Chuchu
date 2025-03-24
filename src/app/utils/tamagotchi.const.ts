@@ -1,22 +1,22 @@
 export enum HealthState {
-  Healthy,
-  Sick,
-  Dead,
+  Healthy = 'Healthy',
+  Sick = 'Sick',
+  Dead = 'Dead',
 }
 
 export enum LifeStage {
-  Egg,
-  Baby,
-  Toddler,
-  Child,
-  Adult,
+  Egg = 'Egg',
+  Baby = 'Baby',
+  Toddler = 'Toddler',
+  Child = 'Child',
+  Adult = 'Adult',
 }
 
 export enum TamagotchiType {
-  Fit,
-  Normal,
-  NightOwl,
-  Fat,
-  Ill,
-  Lazy,
+  Fit = 'Fit',
+  Normal = 'Normal',
+  NightOwl = 'NightOwl',
+  Fat = 'Fat',
+  Ill = 'Ill',
+  Lazy = 'Lazy',
 }
