@@ -35,10 +35,11 @@ export class RestartCommand implements BotCommand {
       )
       message.reply(`${tamagotchi.name} was created!`)
     } catch (error) {
-      if (error instanceof TamagotchiError) {
-        if (error.name === 'CREATE_EXISTS_ERROR') {
-          message.reply(error.message)
-        }
+      if (
+        error instanceof TamagotchiError &&
+        error.name === 'CREATE_EXISTS_ERROR'
+      ) {
+        message.reply(error.message)
       } else {
         console.error(error)
         message.reply(DefaultError)

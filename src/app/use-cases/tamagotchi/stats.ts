@@ -1,12 +1,19 @@
-import { Stats } from '../../models/tamagotchi.type'
+import { DatabaseGateway } from '../../models/database-gateway.type'
+import { TamagotchiError } from '../../models/errors/tamagotchi-error'
+import { Tamagotchi } from '../../models/tamagotchi.type'
 
-export function stats(): Stats {
-  return {
-    hunger: 0,
-    happiness: 0,
-    dirty: 0,
-    discipline: 0,
-    age: 0,
-    weight: 0,
+export async function stats(
+  owner: string,
+  databaseGateway: DatabaseGateway,
+): Promise<Tamagotchi> {
+  const tamagotchi = await databaseGateway.getTamagotchiByOwner(owner)
+  if (!tamagotchi) {
+    throw new TamagotchiError({
+      name: 'GET_NOT_FOUND',
+      message: 'Tamagotchi not found, please use /restart to create one',
+    })
   }
+
+  console.info(`Stats fetched for tamagotchi with id: [${tamagotchi._id}]`)
+  return tamagotchi
 }

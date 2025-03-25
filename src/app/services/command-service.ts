@@ -3,12 +3,17 @@ import { BotCommand } from '../models/bot-command.type'
 import { PingCommand } from '../commands/ping-command'
 import { RestartCommand } from '../commands/restart-command'
 import { DatabaseGateway } from '../models/database-gateway.type'
+import { StatsCommand } from '../commands/stats-command'
 
 export class CommandServiceImpl implements CommandService {
   commands: BotCommand[]
 
   constructor(databaseGateway: DatabaseGateway) {
-    const commands = [new PingCommand(), new RestartCommand(databaseGateway)]
+    const commands = [
+      new PingCommand(),
+      new RestartCommand(databaseGateway),
+      new StatsCommand(databaseGateway),
+    ]
     this.commands = commands
   }
 
