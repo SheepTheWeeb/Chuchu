@@ -1,7 +1,12 @@
-import { Interaction, CacheType } from 'discord.js'
+import {
+  SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+  ChatInputCommandInteraction,
+} from 'discord.js'
 
 export interface BotCommand {
   name: string
   description: string
-  execute(message: Interaction<CacheType>): Promise<void>
+  execute(message: ChatInputCommandInteraction): Promise<void>
+  getSlashCommandBuilder(): SlashCommandBuilder | SlashCommandOptionsOnlyBuilder
 }

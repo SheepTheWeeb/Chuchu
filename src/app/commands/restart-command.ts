@@ -1,7 +1,13 @@
-import { Interaction, CacheType } from 'discord.js'
+import {
+  SlashCommandBuilder,
+  ChatInputCommandInteraction,
+  SlashCommandOptionsOnlyBuilder,
+} from 'discord.js'
 import { BotCommand } from '../models/bot-command.type'
 import { restart } from '../use-cases/tamagotchi/restart'
 import { DatabaseGateway } from '../models/database-gateway.type'
+import { DefaultNames } from '../utils/tamagotchi.const'
+import { TamagotchiError } from '../models/errors/tamagotchi-error'
 
 export class RestartCommand implements BotCommand {
   name: string
@@ -14,14 +20,40 @@ export class RestartCommand implements BotCommand {
     this.databaseGateway = databaseGateway
   }
 
-  async execute(message: Interaction<CacheType>): Promise<void> {
-    console.log('restart command executing...')
-    // TODO: Message handling
+  async execute(message: ChatInputCommandInteraction): Promise<void> {
+    console.debug('restart command executing...')
+    let name = message.options.getString('name')
+    if (!name) {
+      name = DefaultNames[Math.floor(Math.random() * DefaultNames.length)]
+    }
 
     try {
-      await restart(message.user.username, 'Henk Bosman', this.databaseGateway)
+      const tamagotchi = await restart(
+        message.user.username,
+        name,
+        this.databaseGateway,
+      )
+      message.reply(`${tamagotchi.name} was created!`)
     } catch (error) {
-      console.error(error)
+      if (error instanceof TamagotchiError) {
+        if (error.name === 'CREATE_EXISTS_ERROR') {
+          message.reply(error.message)
+        }
+      } else {
+        console.error(error)
+        message.reply(`Something went wrong...`)
+      }
     }
+  }
+
+  getSlashCommandBuilder(): SlashCommandOptionsOnlyBuilder {
+    return new SlashCommandBuilder()
+      .setName(this.name)
+      .setDescription(this.description)
+      .addStringOption(option =>
+        option
+          .setName('name')
+          .setDescription('What is the name of your Tamagotchi?'),
+      )
   }
 }

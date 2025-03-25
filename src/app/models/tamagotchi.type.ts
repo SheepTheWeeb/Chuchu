@@ -17,6 +17,7 @@ export type Tamagotchi = {
   health: HealthState
   sleep: Sleep
   wantsAttention: boolean
+  createdAt: string
 }
 
 export type Stats = {

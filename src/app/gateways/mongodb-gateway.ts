@@ -66,14 +66,17 @@ export class MongoDBGatewayImpl implements DatabaseGateway {
     return tamagotchi
   }
 
-  // TODO: only get most recent one
   async getTamagotchiByOwner(owner: string): Promise<Tamagotchi> {
     let tamagotchi: Tamagotchi
     try {
       await this.connect()
-      tamagotchi = await this.collections.tamagotchis.findOne<Tamagotchi>({
-        owner,
-      })
+      tamagotchi = (
+        await this.collections.tamagotchis
+          .find({ owner })
+          .sort({ createdAt: -1 })
+          .limit(1)
+          .toArray()
+      )?.[0]
     } finally {
       await this.client.close()
     }

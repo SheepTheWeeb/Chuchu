@@ -25,8 +25,7 @@ export class DiscordGatewayImpl implements DiscordGateway {
   ): Promise<void> {
     const restCommands = []
     for (const command of this.commandService.commands) {
-      const { name, description } = command
-      restCommands.push({ name, description })
+      restCommands.push(command.getSlashCommandBuilder())
     }
 
     const rest = new REST({ version: '10' }).setToken(token)
