@@ -21,6 +21,8 @@ export enum TamagotchiType {
   Lazy = 'Lazy',
 }
 
+export const DefaultError = `Something went wrong...`
+
 export const DefaultNames: string[] = [
   'Gerrit',
   'Mochi Mochi',

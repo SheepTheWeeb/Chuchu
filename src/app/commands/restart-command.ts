@@ -6,7 +6,7 @@ import {
 import { BotCommand } from '../models/bot-command.type'
 import { restart } from '../use-cases/tamagotchi/restart'
 import { DatabaseGateway } from '../models/database-gateway.type'
-import { DefaultNames } from '../utils/tamagotchi.const'
+import { DefaultError, DefaultNames } from '../utils/tamagotchi.const'
 import { TamagotchiError } from '../models/errors/tamagotchi-error'
 
 export class RestartCommand implements BotCommand {
@@ -41,7 +41,7 @@ export class RestartCommand implements BotCommand {
         }
       } else {
         console.error(error)
-        message.reply(`Something went wrong...`)
+        message.reply(DefaultError)
       }
     }
   }
