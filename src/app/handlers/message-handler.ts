@@ -6,7 +6,7 @@ export async function handleMessage(
   message: Interaction<CacheType>,
   commandService: CommandService,
 ) {
-  if (!message.isChatInputCommand()) return
+  if (!message.isChatInputCommand() || message.user.bot) return
 
   const command: BotCommand | undefined = commandService.get(
     message.commandName,
