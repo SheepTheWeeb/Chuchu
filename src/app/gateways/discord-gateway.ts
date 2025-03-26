@@ -1,4 +1,5 @@
 import {
+  AttachmentBuilder,
   Client,
   EmbedBuilder,
   Events,
@@ -14,6 +15,7 @@ import {
   convertNumberToHearts,
   convertNumberToPoo,
 } from '../utils/tamagotchi-utils'
+import sharp from 'sharp'
 
 export class DiscordGatewayImpl implements DiscordGateway {
   client: Client<boolean>
@@ -100,7 +102,20 @@ export class DiscordGatewayImpl implements DiscordGateway {
         },
         { name: 'Age', value: `${tamagotchi.stats.age} days`, inline: true },
       )
+      .setImage('attachment://file.jpg')
       .setTimestamp()
       .setFooter({ text: 'Tamagotchi stats command' })
+  }
+
+  static async getAttachment(
+    imageUrl: string,
+    width: number,
+    height: number,
+  ): Promise<AttachmentBuilder> {
+    const stream = await sharp(imageUrl)
+      .resize(width, height, { kernel: sharp.kernel.nearest })
+      .toBuffer()
+
+    return new AttachmentBuilder(stream)
   }
 }

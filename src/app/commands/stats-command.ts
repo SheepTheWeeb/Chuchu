@@ -19,16 +19,22 @@ export class StatsCommand implements BotCommand {
 
   async execute(message: ChatInputCommandInteraction): Promise<void> {
     console.debug('stats command executing...')
+    // TODO: Handle toggled lights with black image and zzz
     try {
       const tamagotchi = await stats(
         message.user.username,
         this.databaseGateway,
       )
       const embed = DiscordGatewayImpl.getTamagotchiEmbed(tamagotchi)
-      message.reply({ embeds: [embed] })
-
-      // Handle toggled lights with black image and zzz
-      // seperate function for embed messages / tamagotchi embeds
+      const file = await DiscordGatewayImpl.getAttachment(
+        './src/app/resources/tamagotchi/egg1.png',
+        200,
+        200,
+      )
+      message.reply({
+        embeds: [embed],
+        files: [file],
+      })
     } catch (error) {
       if (error instanceof TamagotchiError && error.name === 'GET_NOT_FOUND') {
         message.reply(error.message)
