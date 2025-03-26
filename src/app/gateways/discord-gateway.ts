@@ -1,7 +1,19 @@
-import { Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js'
+import {
+  Client,
+  EmbedBuilder,
+  Events,
+  GatewayIntentBits,
+  REST,
+  Routes,
+} from 'discord.js'
 import { DiscordGateway } from '../models/discord-gateway.type'
 import { handleMessage } from '../handlers/message-handler'
 import { CommandService } from '../models/command-service.type'
+import { Tamagotchi } from '../models/tamagotchi.type'
+import {
+  convertNumberToHearts,
+  convertNumberToPoo,
+} from '../utils/tamagotchi-utils'
 
 export class DiscordGatewayImpl implements DiscordGateway {
   client: Client<boolean>
@@ -53,5 +65,42 @@ export class DiscordGatewayImpl implements DiscordGateway {
     })
 
     this.client.login(token)
+  }
+
+  static getTamagotchiEmbed(tamagotchi: Tamagotchi): EmbedBuilder {
+    return new EmbedBuilder()
+      .setColor(0x008000)
+      .setTitle(tamagotchi.name)
+      .setDescription(tamagotchi.activity)
+      .addFields(
+        {
+          name: 'Happiness',
+          value: convertNumberToHearts(tamagotchi.stats.happiness),
+          inline: true,
+        },
+        {
+          name: 'Hunger',
+          value: convertNumberToHearts(tamagotchi.stats.hunger),
+          inline: true,
+        },
+        {
+          name: 'Discipline',
+          value: convertNumberToHearts(tamagotchi.stats.discipline),
+          inline: true,
+        },
+        {
+          name: 'Dirty',
+          value: convertNumberToPoo(tamagotchi.stats.dirty),
+          inline: true,
+        },
+        {
+          name: 'Weight',
+          value: `${tamagotchi.stats.weight} KG`,
+          inline: true,
+        },
+        { name: 'Age', value: `${tamagotchi.stats.age} days`, inline: true },
+      )
+      .setTimestamp()
+      .setFooter({ text: 'Tamagotchi stats command' })
   }
 }

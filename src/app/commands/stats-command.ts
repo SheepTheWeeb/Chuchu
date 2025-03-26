@@ -4,6 +4,7 @@ import { DatabaseGateway } from '../models/database-gateway.type'
 import { DefaultError } from '../utils/tamagotchi.const'
 import { stats } from '../use-cases/tamagotchi/stats'
 import { TamagotchiError } from '../models/errors/tamagotchi-error'
+import { DiscordGatewayImpl } from '../gateways/discord-gateway'
 
 export class StatsCommand implements BotCommand {
   name: string
@@ -23,8 +24,11 @@ export class StatsCommand implements BotCommand {
         message.user.username,
         this.databaseGateway,
       )
-      // TODO: create embed with all stats
+      const embed = DiscordGatewayImpl.getTamagotchiEmbed(tamagotchi)
+      message.reply({ embeds: [embed] })
+
       // Handle toggled lights with black image and zzz
+      // seperate function for embed messages / tamagotchi embeds
     } catch (error) {
       if (error instanceof TamagotchiError && error.name === 'GET_NOT_FOUND') {
         message.reply(error.message)
