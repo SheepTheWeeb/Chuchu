@@ -5,6 +5,7 @@ import { DefaultError } from '../utils/tamagotchi.const'
 import { stats } from '../use-cases/tamagotchi/stats'
 import { TamagotchiError } from '../models/errors/tamagotchi-error'
 import { DiscordGatewayImpl } from '../gateways/discord-gateway'
+import { getTamagotchiImage } from '../utils/tamagotchi-utils'
 
 export class StatsCommand implements BotCommand {
   name: string
@@ -19,7 +20,6 @@ export class StatsCommand implements BotCommand {
 
   async execute(message: ChatInputCommandInteraction): Promise<void> {
     console.debug('stats command executing...')
-    // TODO: Handle toggled lights with black image and zzz
     try {
       const tamagotchi = await stats(
         message.user.username,
@@ -27,7 +27,7 @@ export class StatsCommand implements BotCommand {
       )
       const embed = DiscordGatewayImpl.getTamagotchiEmbed(tamagotchi)
       const file = await DiscordGatewayImpl.getAttachment(
-        './src/app/resources/tamagotchi/egg1.png',
+        getTamagotchiImage(tamagotchi),
         200,
         200,
       )
@@ -44,6 +44,7 @@ export class StatsCommand implements BotCommand {
       }
     }
   }
+
   getSlashCommandBuilder(): SlashCommandBuilder {
     return new SlashCommandBuilder()
       .setName(this.name)

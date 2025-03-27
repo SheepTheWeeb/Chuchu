@@ -18,7 +18,7 @@ export const resetValues: Tamagotchi = {
   health: HealthState.Healthy,
   sleep: {
     asleep: false,
-    lights: false,
+    lights: true,
   },
   wantsAttention: false,
   createdAt: '',

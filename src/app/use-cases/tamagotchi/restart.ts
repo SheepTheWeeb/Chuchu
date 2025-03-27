@@ -1,6 +1,7 @@
 import { DatabaseGateway } from '../../models/database-gateway.type'
 import { TamagotchiError } from '../../models/errors/tamagotchi-error'
 import { resetValues } from '../../utils/tamagotchi-reset-values.const'
+import { getRandomType } from '../../utils/tamagotchi-utils'
 import { HealthState } from '../../utils/tamagotchi.const'
 
 export async function restart(
@@ -28,6 +29,7 @@ async function createNew(
   newTamagotchi.owner = owner
   newTamagotchi.name = name
   newTamagotchi.createdAt = `${Date.now()}`
+  newTamagotchi.type = getRandomType()
   const objectId = await databaseGateway.createTamagotchi(newTamagotchi)
   console.info(`Tamagotchi created with id [${objectId}]!`)
   return await databaseGateway.getTamagotchiById(objectId)
